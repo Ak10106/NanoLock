@@ -50,7 +50,7 @@ public class Suggester {
         return result;
     }
 
-    private List<String> parse(InputStream input, String encoding) throws XmlPullParserException, IOException {
+    private List<String> parse(InputStream input, @SuppressWarnings("SameParameterValue") String encoding) throws XmlPullParserException, IOException {
         XmlPullParser xpp = Xml.newPullParser();
         xpp.setInput(input, encoding);
 

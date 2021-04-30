@@ -4,10 +4,9 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,30 +37,24 @@ public class MainActivity extends AppCompatActivity {
         input = findViewById(R.id.input);
 
         Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String query = input.getText().toString().trim();
-                if (!query.isEmpty()) {
-                    String suggestUrl = getResources().getString(R.string.suggest_url);
-                    new SuggestThread(suggestUrl, handler, query).start();
-                }
+        button.setOnClickListener(v -> {
+            String query = input.getText().toString().trim();
+            if (!query.isEmpty()) {
+                String suggestUrl = getResources().getString(R.string.suggest_url);
+                new SuggestThread(suggestUrl, handler, query).start();
             }
         });
 
         ListView suggested = findViewById(R.id.suggested);
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                new ArrayList<String>());
+                new ArrayList<>());
         suggested.setAdapter(adapter);
-        suggested.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                String text = (String) parent.getItemAtPosition(pos);
-                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-                intent.putExtra(SearchManager.QUERY, text);
-                startActivity(intent);
-            }
+        suggested.setOnItemClickListener((parent, view, pos, id) -> {
+            String text = (String) parent.getItemAtPosition(pos);
+            Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+            intent.putExtra(SearchManager.QUERY, text);
+            startActivity(intent);
         });
     }
 
@@ -78,9 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static class SuggestHandler extends Handler {
-        private WeakReference<MainActivity> activityRef;
+        private final WeakReference<MainActivity> activityRef;
 
         SuggestHandler(MainActivity activity) {
+            super(Looper.getMainLooper());
             activityRef = new WeakReference<>(activity);
         }
 
