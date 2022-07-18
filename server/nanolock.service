@@ -1,0 +1,17 @@
+# 1. Change "/path/to/repo/" 
+# 2. Copy this file to /etc/systemd/system/
+# 3. sudo systemctl daemon-reload
+# 4. sudo systemctl start nanolock.service
+
+[Unit]
+Description=NanoLock
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /path/to/repo/server/main.py
+WorkingDirectory=/path/to/repo/server/
+
+[Install]
+WantedBy=multi-user.target

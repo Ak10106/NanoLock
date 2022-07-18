@@ -19,8 +19,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.NetworkInterface;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private Boolean locked = true;
     private String current_device = "";
     private String current_device_name = "";
-    private OkHttpClient okHttpClient;
     private Button lock;
     private String mac_address;
     private String android_name;
@@ -69,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }
         lock = findViewById(R.id.lock);
         pagenameTextView = findViewById(R.id.pagename);
-
-        okHttpClient = new OkHttpClient();
 
         // First connection
         if (current_device != "") {
@@ -260,9 +263,39 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
-        String url = "http://" + current_device + ":5000/" + query;
+        String url = "https://" + current_device + ":5000/" + query;
 
-        OkHttpClient client = new OkHttpClient();
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                    }
+                    @Override
+                    public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                    }
+                    @Override
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return new java.security.cert.X509Certificate[]{};
+                    }
+                }
+        };
+        SSLContext sslContext = null;
+        try {
+            sslContext = SSLContext.getInstance("SSL");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        try {
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        OkHttpClient.Builder newBuilder = new OkHttpClient.Builder();
+        newBuilder.sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager) trustAllCerts[0]);
+        newBuilder.hostnameVerifier((hostname, session) -> true);
+
+        OkHttpClient client = newBuilder.build();
 
         JSONObject postdata = new JSONObject();
         try {

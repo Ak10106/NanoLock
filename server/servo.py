@@ -25,7 +25,7 @@ class Servo:
     def control(self, duty):
         servo = GPIO.PWM(self._SERVO_GPIO, self._SERVO_PWM)
         servo.start(0.0)
-        # servo.ChangeDutyCycle(duty)
+        servo.ChangeDutyCycle(duty)
         time.sleep(self._wait_time)
         servo.stop()
 
