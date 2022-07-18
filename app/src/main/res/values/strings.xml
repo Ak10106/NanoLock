@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Suggest</string>
-    <string name="hint_query">Query text</string>
-    <string name="button_suggest">Suggest</string>
+    <string name="app_name">NanoLock</string>
+    <string name="hint_query">Enter IP address</string>
+    <string name="hint_ip">Enter IP address</string>
+    <string name="hint_name">Enter Name</string>
+    <string name="button_unlocked">Unlocked</string>
+    <string name="button_locked">Locked</string>
     <string name="result_no_suggestions">No suggestions</string>
-    <string name="suggest_url">https://www.google.com/complete/search?hl=ja&amp;ie=utf-8&amp;oe=utf-8&amp;output=toolbar&amp;q=</string>
+    <string name="devices">Devices</string>
+    <string name="Whitelist">Whitelist</string>
+    <string name="history">History</string>
+    <string name="button_register">Register</string>
+    <string name="menu_lock">Lock</string>
+    <string name="delete">Delete</string>
+    <string name="refresh">Refresh</string>
 </resources>

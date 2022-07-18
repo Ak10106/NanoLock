@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".HistoryActivity">
 
     <TextView
         android:id="@+id/current_device_view"
@@ -14,20 +13,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
         android:inputType="textMultiLine"
-        android:lines="3"
+        android:lines="2"
+        android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/macaddress_view"
+    <ListView
+        android:id="@+id/devices"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/margin"
-        android:inputType="textMultiLine"
-        android:lines="3"
-        android:textSize="@dimen/text_size"
+        app:layout_constraintBottom_toTopOf="@id/pagename"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_device_view" />
@@ -43,22 +41,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-    <Button
-        android:id="@+id/lock"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp"
-        android:background="@drawable/circle"
-        android:drawableLeft="@drawable/lock"
-        android:text="@string/button_locked"
-        android:textSize="@dimen/text_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

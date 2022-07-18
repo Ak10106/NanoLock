@@ -1,4 +1,4 @@
-package jp.ac.titech.itpro.sdl.suggest;
+package jp.ac.titech.itpro.sdl.nanolock;
 
 import org.junit.Test;
 

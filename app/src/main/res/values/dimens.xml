@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size">24sp</dimen>
-    <dimen name="margin">8dp</dimen>
+    <dimen name="margin">10dp</dimen>
+    <dimen name="lock_icon_size">40dp</dimen>
 </resources>
